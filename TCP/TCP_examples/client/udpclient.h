@@ -1,7 +1,7 @@
 #ifndef UDPCLIENT_H
 #define UDPCLIENT_H
 
-#include <QtWidgets>
+#include <QtGui>
 #include <QtNetwork>
 
 class UdpClient : public QDialog
@@ -11,22 +11,15 @@ public:
     UdpClient( QWidget *parent=0, Qt::WindowFlags  f=0 );
     ~UdpClient();
 public:
-    QLabel *label1;
-    QLabel *label2;
-    QLineEdit* LineEdit1;
-    QLineEdit *LineEdit2;
-    QPushButton* sendButton;
+	QTextEdit* TextEditReceive;    
+    QPushButton* PushButtonClose;
 
     QUdpSocket *udpSocket;
     quint16 port;
-    QTimer *timer;
-
-    bool status;
-    int i;
 
 public slots:
-    void send();
-    void timeOut();
+    void PushButtonClose_clicked();
+    void dataReceived();
 };
 
 
