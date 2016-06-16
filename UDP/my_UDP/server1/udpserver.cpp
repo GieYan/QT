@@ -9,16 +9,19 @@ UdpServer::UdpServer(QWidget *parent, Qt::WindowFlags f) :
     label2 = new QLabel(tr("send"));
     lineEdit1 = new QLineEdit;
     lineEdit2 = new QLineEdit;
+    Text = new QPushButton(tr("Text:"));
     gLayout->addWidget(label1);
     gLayout->addWidget(lineEdit1);
     gLayout->addWidget(label2);
     gLayout->addWidget(lineEdit2);
+    gLayout->addWidget(Text);
     setLayout(gLayout);
 
     port = 5555;
 
     udpSocket = new QUdpSocket(this);
     udpSocket->bind(port);
+    connect(Text,SIGNAL(clicked()),this,SLOT(openText()));
     connect(udpSocket,SIGNAL(readyRead()),this,SLOT(valueSolve()));
 }
 
@@ -41,12 +44,18 @@ void UdpServer::valueSolve()
         quint16 head;
         quint16 rand;
         in>>head>>rand;
-        out<<head;
-        file.close();
+        out<<head<<rand;
+//        file.close();
         lineEdit1->setText(QString::number(head));
 
         ++rand;
         QString msg = QString::number(rand);
         lineEdit2->setText(msg);
     }
+}
+
+void UdpServer::openText()
+{
+    dataWidget = new showData;
+    dataWidget->exec();
 }

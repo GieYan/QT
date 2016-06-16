@@ -14,9 +14,11 @@ TARGET = server1
 TEMPLATE = app
 
 SOURCES += main.cpp \
-    udpserver.cpp
+    udpserver.cpp \
+    showdata.cpp
 
 HEADERS  += \
     udpserver.h\
+    showdata.h
 
 FORMS    +=
