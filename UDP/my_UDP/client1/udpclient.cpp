@@ -31,6 +31,7 @@ UdpClient::UdpClient( QWidget *parent, Qt::WindowFlags  f )
     port = 5555;
     status = false;
     i=0;
+    head=0;
 
     udpSocket = new QUdpSocket(this);
 }
@@ -43,7 +44,7 @@ void UdpClient::send()
 {
     if(!status)
     {
-        timer->start(5);
+        timer->start(500);
         sendButton->setText("Stop");
         status = true;
     }
@@ -58,9 +59,12 @@ void UdpClient::send()
 
 void UdpClient::timeOut()
 {
+    QByteArray data;
+    QDataStream out(&data,QIODevice::WriteOnly);
+    ++head;
     i = rand()%100;
-    LineEdit1->setText(QString::number(i));
-    QString msg = LineEdit1->text();
-    udpSocket->writeDatagram(msg.toLatin1(),msg.length(),QHostAddress::Broadcast,port);
-
+    out<<head<<i;
+    mss = QString::number(head) + "+" +QString::number(i);
+    LineEdit1->setText(mss);
+    udpSocket->writeDatagram(data,data.length(),QHostAddress::Broadcast,port);
 }

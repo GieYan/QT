@@ -18,7 +18,6 @@ public:
 
     quint16 port;
     QUdpSocket *udpSocket;
-
 public slots:
     void valueSolve();
 };

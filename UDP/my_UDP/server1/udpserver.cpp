@@ -29,18 +29,24 @@ UdpServer::~UdpServer()
 
 void UdpServer::valueSolve()
 {
-    QMessageBox::information(this,tr("dd"),tr("dd"));
-    int i;
     while(udpSocket->hasPendingDatagrams())
     {
         QByteArray dataGram;
         dataGram.resize(udpSocket->pendingDatagramSize());
         udpSocket->readDatagram(dataGram.data(),dataGram.size());
-        lineEdit1->setText(dataGram.data());
-        QString msg = lineEdit1->text();
-        i =msg.toInt();
-        msg = QString::number(++i);
+        QDataStream in(&dataGram,QIODevice::ReadOnly);
+        QFile file("data.dat");
+        file.open(QIODevice::WriteOnly|QIODevice::Append);
+        QDataStream out(&file);
+        quint16 head;
+        quint16 rand;
+        in>>head>>rand;
+        out<<head;
+        file.close();
+        lineEdit1->setText(QString::number(head));
+
+        ++rand;
+        QString msg = QString::number(rand);
         lineEdit2->setText(msg);
-        udpSocket->writeDatagram(msg.toLatin1(),msg.length(),QHostAddress::Broadcast,port);
     }
 }

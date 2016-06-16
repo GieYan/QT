@@ -22,7 +22,9 @@ public:
     QTimer *timer;
 
     bool status;
-    int i;
+    quint16 i;
+    quint16 head;
+    QString mss;
 
 public slots:
     void send();
