@@ -1,0 +1,1 @@
+write a litte program,for testing QRegExp

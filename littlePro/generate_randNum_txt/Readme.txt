@@ -1,0 +1,1 @@
+write a little program,for generating the random number,in "*.txt"
